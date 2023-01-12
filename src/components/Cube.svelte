@@ -238,16 +238,18 @@
 		"+": [zoom, 1.15],
 		"-": [zoom, 1 / 1.15],
 		c: [toggleTransparency],
-		u: [undoRotation],
-		U: [resetCube],
+		z: [undoRotation],
+		Z: [resetCube],
 		X: [scrambleCube],
 		x: [stopScrambling],
 		f: [addRotation, { layer: "front", orientation: "+" }],
 		F: [addRotation, { layer: "front", orientation: "-" }],
 		b: [addRotation, { layer: "back", orientation: "-" }],
 		B: [addRotation, { layer: "back", orientation: "+" }],
-		t: [addRotation, { layer: "top", orientation: "-" }],
-		T: [addRotation, { layer: "top", orientation: "+" }],
+		// t: [addRotation, { layer: "top", orientation: "-" }],
+		// T: [addRotation, { layer: "top", orientation: "+" }],
+		u: [addRotation, { layer: "top", orientation: "-" }],
+		U: [addRotation, { layer: "top", orientation: "+" }],
 		d: [addRotation, { layer: "down", orientation: "+" }],
 		D: [addRotation, { layer: "down", orientation: "-" }],
 		l: [addRotation, { layer: "left", orientation: "-" }],
@@ -263,21 +265,21 @@
 	};
 
 	const macros = {
-		'3': 'rtRT',     // C 6 (after 6 macros we reach starting position again)
-		'4': 'trTRTFtf', // C 15
-		'5': 'TLtltfTF', // C 15
-		'6': 'frtRTF',   // C 6
-		'7': 'trTLtRTl', // C 3
-		'8': 'tRTr'      // C 6
+		'3': 'ruRU',     // C 6 (after 6 macros we reach starting position again)
+		'4': 'urURUFuf', // C 15
+		'5': 'ULulufUF', // C 15
+		'6': 'fruRUF',   // C 6
+		'7': 'urULuRUl', // C 3
+		'8': 'uRUr'      // C 6
 	}
 
 	const convert = (state,ch) => {
-		if (! 'TFRDBLtfrdbl'.includes(ch)) return ch
-		const T0 = 'TFRDBL'
+		if (! 'UFRDBLufrdbl'.includes(ch)) return ch
+		const T0 = 'UFRDBL'
 		const T1 = {
 			 'R': 'L',
 			 'B': 'F',
-			 'V': 'T',
+			 'V': 'U',
 			 'O': 'R',
 			 'G': 'B',
 			 'Y': 'D'
@@ -291,11 +293,11 @@
 		const color = state[index]
 		assert("RBVOGY".includes(color),true)
 		let command = T1[color]
-		assert("LFTRBD".includes(command),true)
+		assert("LFURBD".includes(command),true)
 		if (lower) command = command.toLowerCase()
 		return command
 	}
-	assert( convert('RBVOGY','R'), 'T')
+	assert( convert('RBVOGY','R'), 'U')
 
 	function enableKeyControl() {
 		document.addEventListener("keydown", (e) => {
