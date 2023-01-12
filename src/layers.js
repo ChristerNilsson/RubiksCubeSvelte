@@ -14,7 +14,7 @@ export const layerMap = {
 	down: { axis: "y", value: +1 },
 	left: { axis: "x", value: -1 },
 	right: { axis: "x", value: +1 },
-	equator: { axis: "y", value: 0 },
-	middle: { axis: "x", value: 0 },
-	standing: { axis: "z", value: 0 },
+	// equator: { axis: "y", value: 0 },
+	// middle: { axis: "x", value: 0 },
+	// standing: { axis: "z", value: 0 },
 };

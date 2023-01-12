@@ -11,7 +11,7 @@
 	import { faceNames, layerMap } from "../layers.js"
 	import { mod, sleep, randEl } from "../utils.js"
 
-	const ITERATIONS=2 // 50
+	const ITERATIONS=50 // 50
 	// variables
 
 	export let popup
@@ -25,7 +25,7 @@
 	const cubeRotation = { x: 45*x, y: 45*y, z: 45*z }
 	let layerTransform = ""
 
-	let state = 'RBVOGY' // Röd Blå Vit
+	let state = 'RBVOGY' // Röd Blå Vit Orange Grön Yellow
 
 	// cubies
 
@@ -73,7 +73,7 @@
 	hash.RVGOYB = 376
 
 	hash.VGRYBO = 314
-	hash.VBRYGO = 334
+	hash.VRBYOG = 334
 	hash.VBOYGR = 354
 	hash.VOGYRB = 374
 
@@ -140,9 +140,12 @@
 
 	function toggleTransparency() {
 		transparent = !transparent;
+		console.log({cubeRotation})
+		console.log({state})
 	}
 
 	async function rotateLayer({ layer, orientation }) {
+		console.log('rotateLayer',layer, orientation)
 		const { axis, value } = layerMap[layer];
 		const trafo = cubieTransform[layer][orientation];
 		for (let index = 0; index < cubies.length; index++) {
@@ -251,12 +254,12 @@
 		L: [addRotation, { layer: "left", orientation: "+" }],
 		r: [addRotation, { layer: "right", orientation: "+" }],
 		R: [addRotation, { layer: "right", orientation: "-" }],
-		m: [addRotation, { layer: "middle", orientation: "-" }],
-		M: [addRotation, { layer: "middle", orientation: "+" }],
-		s: [addRotation, { layer: "standing", orientation: "+" }],
-		S: [addRotation, { layer: "standing", orientation: "-" }],
-		e: [addRotation, { layer: "equator", orientation: "+" }],
-		E: [addRotation, { layer: "equator", orientation: "-" }],
+		// m: [addRotation, { layer: "middle", orientation: "-" }],
+		// M: [addRotation, { layer: "middle", orientation: "+" }],
+		// s: [addRotation, { layer: "standing", orientation: "+" }],
+		// S: [addRotation, { layer: "standing", orientation: "-" }],
+		// e: [addRotation, { layer: "equator", orientation: "+" }],
+		// E: [addRotation, { layer: "equator", orientation: "-" }],
 	};
 
 	const macros = {
@@ -270,7 +273,6 @@
 
 	const convert = (state,ch) => {
 		if (! 'TFRDBLtfrdbl'.includes(ch)) return ch
-
 		const T0 = 'TFRDBL'
 		const T1 = {
 			 'R': 'L',
