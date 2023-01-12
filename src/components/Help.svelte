@@ -1,22 +1,22 @@
 <script>
-	import { fly } from "svelte/transition";
+	import { fly } from "svelte/transition"
 
-	let showHelp = false;
+	let showHelp = false
 
-	let helpShown = localStorage.getItem("helpShown");
+	let helpShown = localStorage.getItem("helpShown")
 
 	if (helpShown != "yes") {
 		setTimeout(() => {
-			showHelp = true;
-			localStorage.setItem("helpShown", "yes");
-		}, 1000);
+			showHelp = true
+			localStorage.setItem("helpShown", "yes")
+		}, 1000)
 	}
 
 	document.addEventListener("keydown", (e) => {
 		if (e.key == "i") {
 			showHelp = !showHelp;
 		}
-	});
+	})
 </script>
 
 <section>
@@ -46,8 +46,8 @@
 				</p>
 				<br />
 				<p>
-					The keys <strong>t</strong>, <strong>T</strong> rotate
-					the top layer.
+					The keys <strong>u</strong>, <strong>U</strong> rotate
+					the upper layer.
 				</p>
 				<p>
 					The keys <strong>d</strong>,
@@ -69,7 +69,8 @@
 					The keys <strong>b</strong>,
 					<strong>B</strong> rotate the back layer.
 				</p>
-				<p>
+
+				<!-- <p>
 					The keys <strong>e</strong>,
 					<strong>E</strong> rotate the equator layer.
 				</p>
@@ -80,17 +81,37 @@
 				<p>
 					The keys <strong>s</strong>,
 					<strong>S</strong> rotate the standing layer.
-				</p>
+				</p> -->
+
 				<p>
 					When you enter many rotations in a row,<br />they
 					are put on a queue.
 				</p>
 				<br />
 				<p>
-					The key <strong>u</strong> undoes the last layer rotation.
+					The macro key <strong>3</strong> does ruRU
 				</p>
 				<p>
-					The key <strong>U</strong> resets the whole cube.
+					The macro key <strong>4</strong> does urURUFuf
+				</p>
+				<p>
+					The macro key <strong>5</strong> does ULulufUF
+				</p>
+				<p>
+					The macro key <strong>6</strong> does fruRUF
+				</p>
+				<p>
+					The macro key <strong>7</strong> does urULuRUl
+				</p>
+				<p>
+					The macro key <strong>8</strong> does uRUr
+				</p>
+				<br />
+				<p>
+					The key <strong>z</strong> undoes the last layer rotation.
+				</p>
+				<p>
+					The key <strong>Z</strong> resets the whole cube.
 				</p>
 				<p>
 					The key <strong>x</strong> stops the rotation queue.

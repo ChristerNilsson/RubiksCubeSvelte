@@ -13,8 +13,8 @@ key|macro
 ## Translation table
 paper|code|desc
 -|-|-
-U|t|Top clockwise
-U’|T|Top anti clockwise
+U|u|Up clockwise
+U’|U|Up anti clockwise
 R|r|Right
 R’|R|
 L|l|Left
@@ -25,12 +25,12 @@ F’|F|
 ## Resulting table
 key|macro|period length|pattern
 -|-|-:|-
-3| rt RT       | 6|4 corners and 3 edges are cycled
-4| tr TR TF tf |15|4 corners and 5 edges are cycled
-5| TL tl tf TF |15|4 corners and 5 edges are cycled
-6| frt RTF     | 6|4 corners and 4 edges are cycled
-7| tr TL t RT l| 3|3 corners are cycled
-8| t RT r      | 6|4 corners and 3 edges are cycled
+3| rt RU       | 6|4 corners and 3 edges are cycled
+4| ur UR UF uf |15|4 corners and 5 edges are cycled
+5| UL ul uf UF |15|4 corners and 5 edges are cycled
+6| fru RUF     | 6|4 corners and 4 edges are cycled
+7| ur UL u RU l| 3|3 corners are cycled
+8| u RU r      | 6|4 corners and 3 edges are cycled
 
 The original code associated letters with colors.  
 This makes it harder to remember the macros.  
