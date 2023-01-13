@@ -15,17 +15,20 @@
 	// variables
 
 	export let popup
+	export let state
+	export let cubeRotation
+
 	let visible = false
 	let scrambling = false
 	let transparent = false
 	let zoomFactor = 1
 	// $: rotationSpeed = scrambling ? 1*100 : 1*250
-	$: rotationSpeed = scrambling ? 50 : 125
-	const [x,y,z] = [3,5,6]
-	const cubeRotation = { x: 45*x, y: 45*y, z: 45*z }
+	$: rotationSpeed = scrambling ? 5*50 : 5*125
+	let [x,y,z] = [0,0,0] // 3,5,6
+	cubeRotation = { x: 45*x, y: 45*y, z: 45*z }
 	let layerTransform = ""
 
-	let state = 'RBVOGY' // Röd Blå Vit Orange Grön Yellow
+	// let state = 'RBVOGY' // Röd Blå Vit Orange Grön Yellow
 
 	// cubies
 
@@ -60,78 +63,66 @@
 		}
 	}
 
+
+
+
 	const hash = {}
 
-	hash.OGVRBY = 312 // <=> x=3*45 y=1*45 z=2*45 grader
-	hash.OVBRYG = 332
-	hash.OBYRGV = 352
-	hash.OYGRVB = 372
+	hash.BYOGVR =  {x:1, y:0, z:1}
+	hash.BOVGRY =  {x:1, y:0, z:3}
+	hash.BVRGYO =  {x:1, y:0, z:5}
+	hash.BRYGOV =  {x:1, y:0, z:7}
 
-	hash.RGYOBV = 316
-	hash.RYBOVG = 336
-	hash.RBVOGY = 356
-	hash.RVGOYB = 376
+	hash.GRVBOY =  {x:5, y:0, z:1}
+	hash.GYRBVO =  {x:5, y:0, z:3}
+	hash.GOYBRV =  {x:5, y:0, z:5}
+	hash.GVOBYR =  {x:5, y:0, z:7}
 
-	hash.VGRYBO = 314
-	hash.VRBYOG = 334
-	hash.VBOYGR = 354
-	hash.VOGYRB = 374
+	hash.OGVRBY =  {x:3, y:1, z:2}
+	hash.OVBRYG =  {x:3, y:3, z:2}
+	hash.OBYRGV =  {x:3, y:5, z:2}
+	hash.OYGRVB =  {x:3, y:7, z:2}
 
-	hash.YGOVBR = 310
-	hash.YOBVRG = 330
-	hash.YBRVGO = 350
-	hash.YRGVOB = 370
+	hash.RGYOBV =  {x:3, y:1, z:6}
+	hash.RYBOVG =  {x:3, y:3, z:6}
+	hash.RBVOGY =  {x:3, y:5, z:6}
+	hash.RVGOYB =  {x:3, y:7, z:6}
 
-	hash.BYOGVR = 101
-	hash.BOVGRY = 103
-	hash.BVRGYO = 105
-	hash.BRYGOV = 107
+	hash.VGRYBO =  {x:3, y:1, z:4}
+	hash.VRBYOG =  {x:3, y:3, z:4}
+	hash.VBOYGR =  {x:3, y:5, z:4}
+	hash.VOGYRB =  {x:3, y:7, z:4}
 
-	hash.GOYBRV = 141
-	hash.GVOBYR = 143
-	hash.GRVBOY = 145
-	hash.GYRBVO = 147
+	hash.YGOVBR =  {x:3, y:1, z:0}
+	hash.YOBVRG =  {x:3, y:3, z:0}
+	hash.YBRVGO =  {x:3, y:5, z:0}
+	hash.YRGVOB =  {x:3, y:7, z:0}
 
 	const rot = (key,lst) => lst.map((i) => key[i]).join('')
 
-	function save(state,lst) {
-		console.log('save in',state,lst)
-		state = rot(state,lst)
-		console.log('save ut',state)
-		return state
-	}
-
 	function rotateCube(direction) { // t ex GVOBYR
-		console.log(direction)
-		if (direction == "up")    state = save(state,[0,2,4,3,5,1])
-		if (direction == "down")  state = save(state,[0,5,1,3,2,4])
-		if (direction == "left")  state = save(state,[2,1,3,5,4,0])
-		if (direction == "right") state = save(state,[5,1,0,2,4,3])
-		if (direction == "pu")    state = save(state,[1,3,2,4,0,5])
-		if (direction == "pd")    state = save(state,[4,0,2,1,3,5])
 
-		let xyz = hash[state]
-		console.log({state,xyz})
-		let z = Math.round(xyz % 10)
-		xyz = Math.floor(xyz / 10)
-		let y = Math.round(xyz % 10)
-		xyz = Math.floor(xyz / 10)
-		let x = Math.round(xyz % 10)
+		console.log(state)
 
-		console.log({x,y,z})
+		let {x,y,z} = hash[state]
+		x *= 45
+		y *= 45
+		z *= 45
+		cubeRotation = {x,y,z}
 
-		if (x-cubeRotation.x > 4) x=x-8
-		if (y-cubeRotation.y > 4) y=y-8
-		if (z-cubeRotation.z > 4) z=z-8
+		let vector
 
-		if (x-cubeRotation.x < -4) x=x+8
-		if (y-cubeRotation.y < -4) y=y+8
-		if (z-cubeRotation.z < -4) z=z+8
+		if (direction == "left")  vector = [0,5,1,3,2,4] // 0 3
+		if (direction == "right") vector = [0,2,4,3,5,1] // 0 3
 
-		cubeRotation.x = 45*x
-		cubeRotation.y = 45*y
-		cubeRotation.z = 45*z
+		if (direction == "pu")    vector = [5,1,0,2,4,3] // 1 4
+		if (direction == "pd")    vector = [2,1,3,5,4,0] // 1 4
 
+		if (direction == "down")  vector = [1,3,2,4,0,5] // 2 5
+		if (direction == "up")    vector = [4,0,2,1,3,5] // 2 5
+
+		state = rot(state,vector)
+	
 	}
 
 	function zoom(factor) {
@@ -376,8 +367,11 @@
 	}
 
 	.cube {
-		transform: scale(var(--zoom)) rotateX(var(--rotation-x))
-			rotateY(var(--rotation-y)) rotateZ(var(--rotation-z));
+		transform: 
+			scale(var(--zoom))
+			rotateX(var(--rotation-x))
+			rotateY(var(--rotation-y))
+			rotateZ(var(--rotation-z));
 		transition: transform var(--speed) ease-out;
 	}
 
