@@ -66,37 +66,38 @@
 
 
 
-	const hash = {}
+	// const hash = {}
+	// 						// lr ud pg
 
-	hash.BYOGVR =  {x:1, y:0, z:1}
-	hash.BOVGRY =  {x:1, y:0, z:3}
-	hash.BVRGYO =  {x:1, y:0, z:5}
-	hash.BRYGOV =  {x:1, y:0, z:7}
+	// hash.BYOGVR =  "xxx"
+	// hash.BOVGRY =  "xxx"
+	// hash.BVRGYO =  "xxx"
+	// hash.BRYGOV =  "xxx"
 
-	hash.GRVBOY =  {x:5, y:0, z:1}
-	hash.GYRBVO =  {x:5, y:0, z:3}
-	hash.GOYBRV =  {x:5, y:0, z:5}
-	hash.GVOBYR =  {x:5, y:0, z:7}
+	// hash.GRVBOY =  "xzx"
+	// hash.GYRBVO =  "xxx"
+	// hash.GOYBRV =  "xxx"
+	// hash.GVOBYR =  "xxx"
 
-	hash.OGVRBY =  {x:3, y:1, z:2}
-	hash.OVBRYG =  {x:3, y:3, z:2}
-	hash.OBYRGV =  {x:3, y:5, z:2}
-	hash.OYGRVB =  {x:3, y:7, z:2}
+	// hash.OGVRBY =  "xxx"
+	// hash.OVBRYG =  "xxx"
+	// hash.OBYRGV =  "xzy"
+	// hash.OYGRVB =  "xxx"
 
-	hash.RGYOBV =  {x:3, y:1, z:6}
-	hash.RYBOVG =  {x:3, y:3, z:6}
-	hash.RBVOGY =  {x:3, y:5, z:6}
-	hash.RVGOYB =  {x:3, y:7, z:6}
+	// hash.RGYOBV =  "xxx"
+	// hash.RYBOVG =  "xxx"
+	// hash.RBVOGY =  "xzy"
+	// hash.RVGOYB =  "xxx"
 
-	hash.VGRYBO =  {x:3, y:1, z:4}
-	hash.VRBYOG =  {x:3, y:3, z:4}
-	hash.VBOYGR =  {x:3, y:5, z:4}
-	hash.VOGYRB =  {x:3, y:7, z:4}
+	// hash.VGRYBO =  "xxx"
+	// hash.VRBYOG =  "xxx"
+	// hash.VBOYGR =  "xzy"
+	// hash.VOGYRB =  "xxx"
 
-	hash.YGOVBR =  {x:3, y:1, z:0}
-	hash.YOBVRG =  {x:3, y:3, z:0}
-	hash.YBRVGO =  {x:3, y:5, z:0}
-	hash.YRGVOB =  {x:3, y:7, z:0}
+	// hash.YGOVBR =  "xxx"
+	// hash.YOBVRG =  "xxx"
+	// hash.YBRVGO =  "xxy"
+	// hash.YRGVOB =  "xxx"
 
 	const rot = (key,lst) => lst.map((i) => key[i]).join('')
 
@@ -104,15 +105,45 @@
 
 		console.log(state)
 
-		let {x,y,z} = hash[state]
-		x *= 45
-		y *= 45
-		z *= 45
-		cubeRotation = {x,y,z}
+		// let [lr,ud,pg] = hash[state]
+		// console.log({state,lr,ud,pg})
+		// console.log(hash[state])
+		let pg
+		let lr
+		let ud
+
+		if ('BG'.includes(state[0])) pg='x'
+		if ('YV'.includes(state[0])) pg='y'
+		if ('OR'.includes(state[0])) pg='z'
+
+		if ('BG'.includes(state[1])) lr='x'
+		if ('YV'.includes(state[1])) lr='y'
+		if ('OR'.includes(state[1])) lr='z'
+
+		if ('BG'.includes(state[2])) ud='x'
+		if ('YV'.includes(state[2])) ud='y'
+		if ('OR'.includes(state[2])) ud='z'
+
+		console.log({pg,lr,ud})
+
+
+		if (direction == "left")  cubeRotation[lr] += 2
+		if (direction == "right") cubeRotation[lr] -= 2
+
+		if (direction == "up")    cubeRotation[ud] += 2
+		if (direction == "down")  cubeRotation[ud] -= 2
+
+		if (direction == "pu")    cubeRotation[pg] += 2
+		if (direction == "pd")    cubeRotation[pg] -= 2
 
 		let vector
 
-		if (direction == "left")  vector = [0,5,1,3,2,4] // 0 3
+		if (direction == "left") {
+			if (lr=='x') vector = [0,5,1,3,2,4]
+			if (lr=='y') vector = [5,1,0,2,4,3]
+			if (lr=='z') vector = [1,3,2,4,0,5]
+		} 
+		if (direction == "right") vector = [0,5,1,3,2,4] // 0 3
 		if (direction == "right") vector = [0,2,4,3,5,1] // 0 3
 
 		if (direction == "pu")    vector = [5,1,0,2,4,3] // 1 4
@@ -328,9 +359,9 @@
 			class="cube"
 			style:--speed="{rotationSpeed}ms"
 			style:--zoom={zoomFactor}
-			style:--rotation-x="{cubeRotation.x}deg"
-			style:--rotation-y="{cubeRotation.y}deg"
-			style:--rotation-z="{cubeRotation.z}deg"
+			style:--rotation-x="{cubeRotation.x*45}deg"
+			style:--rotation-y="{cubeRotation.y*45}deg"
+			style:--rotation-z="{cubeRotation.z*45}deg"
 		>
 			<div class="cubieContainer">
 				{#each cubies.filter((c) => !c.rotating) as cubie (cubie.id)}

@@ -25,7 +25,7 @@
 <section>
 	<input type="checkbox" id="helpToggler" bind:checked={showHelp} />
 	<label for="helpToggler"><i class="fas fa-info-circle" /></label>
-	{state} {cubeRotation.x/45} {cubeRotation.y/45} {cubeRotation.z/45}
+	{state} {cubeRotation.x} {cubeRotation.y} {cubeRotation.z}
 	{#if showHelp}
 		<div transition:fly={{ x: -150 }} id="helpContent">
 			<div class="for-mobile">

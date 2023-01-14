@@ -4,7 +4,7 @@
 	import Popup from "./components/Popup.svelte";
 	let popup = { show: false, text: "" };
 	let state = 'RBVOGY'
-	let cubeRotation = {x:3*45,y:5*45,z:6*45} // 3 5 6
+	let cubeRotation = {x:3,y:5,z:6} // 3 5 6
 </script>
 
 <Help bind:state bind:cubeRotation/>
