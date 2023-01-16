@@ -1,8 +1,14 @@
 <script>
 	import { fly } from "svelte/transition"
 
-	export let state
+	// export let state
 	export let cubeRotation
+	export let invHash
+
+	function mod(a,b) {
+		while (a<0) a+=b
+		return a%b
+	}
 
 	let showHelp = false
 
@@ -20,12 +26,22 @@
 			showHelp = !showHelp;
 		}
 	})
+
+	$: x = mod(cubeRotation.x,8)
+	$: y = mod(cubeRotation.y,8)
+	$: z = mod(cubeRotation.z,8)
+
+	$: nr = 100*x+10*y+z
+	// $: console.log({cubeRotation,x,y,z,nr})
+	$: URF = invHash && invHash[nr] ? invHash[nr] : "UNKNOWN"
+	// console.log('Help',invHash)
+	// console.log({nr},URF)
 </script>
 
 <section>
 	<input type="checkbox" id="helpToggler" bind:checked={showHelp} />
 	<label for="helpToggler"><i class="fas fa-info-circle" /></label>
-	{state} {cubeRotation.x} {cubeRotation.y} {cubeRotation.z}
+ {x} {y} {z} {URF}
 	{#if showHelp}
 		<div transition:fly={{ x: -150 }} id="helpContent">
 			<div class="for-mobile">
