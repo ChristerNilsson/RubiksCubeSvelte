@@ -3,12 +3,13 @@
 	import Help from "./components/Help.svelte";
 	import Popup from "./components/Popup.svelte";
 	let popup = { show: false, text: "" };
-	let state = 'RBVOGY'
+	// let state = 'RBW'
 	let cubeRotation = {x:3,y:5,z:6} // 3 5 6
+	let invHash = {}
 </script>
 
-<Help bind:state bind:cubeRotation/>
-<Cube bind:popup bind:state bind:cubeRotation/>
+<Cube bind:popup bind:cubeRotation bind:invHash/>
+<Help bind:cubeRotation bind:invHash/>
 <Popup bind:popup />
 
 <style>
